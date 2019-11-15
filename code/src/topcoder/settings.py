@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'topcoder.spiders'
 #USER_AGENT = 'topcoder (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -94,8 +94,9 @@ LOG_ENABLED = bool(os.getenv('LOG_ENABLED', False))
 
 
 import string
-KEYWORDS = [c for c in string.ascii_lowercase]
+KEYWORDS = [c for c in string.ascii_lowercase][:8]
 # KEYWORDS = ['a',]
+# KEYWORDS = ['Moon',]
 
 
 NASA_ASSET_BASE_URL = 'https://images.nasa.gov/details-'
