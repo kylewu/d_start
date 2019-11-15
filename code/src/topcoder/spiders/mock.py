@@ -1,6 +1,7 @@
 
 import json
 import scrapy
+from scrapy.exceptions import CloseSpider
 
 
 class MockSpider(scrapy.Spider):
@@ -21,6 +22,9 @@ class MockSpider(scrapy.Spider):
         # print(j[0])
         for t in j:
             yield scrapy.Request(f'https://jsonplaceholder.typicode.com/todos/{t["id"]}', self.parse_todo, meta={'todo': t})
+            if t['id'] > 100:
+                raise CloseSpider(f'{t["id"]} > 100')
+
     
     def parse_todo(self, response):
         todo = response.meta['todo']
