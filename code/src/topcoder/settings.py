@@ -65,6 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+   'topcoder.pipelines.DuplicatesPipeline': 100,
    'topcoder.pipelines.TopcoderPipeline': 300,
 }
 
@@ -92,7 +93,8 @@ ITEM_PIPELINES = {
 LOG_ENABLED = bool(os.getenv('LOG_ENABLED', False))
 
 
-KEYWORDS = ['a', ]
+import string
+KEYWORDS = [c for c in string.ascii_lowercase]
 
 
 NASA_ASSET_BASE_URL = 'https://images.nasa.gov/details-'

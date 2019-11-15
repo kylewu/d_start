@@ -21,11 +21,13 @@ class NasaSpider(scrapy.Spider):
         settings = get_project_settings()
         self.asset_url = settings.get('NASA_ASSET_BASE_URL')
         self.start_url = settings.get('AVAIL_API_URL')
-        yield scrapy.Request(self.start_url + '/search?q=' + keyword)
+        print('starting ' + self.start_url + '/search?q=' + keyword)
+        yield scrapy.Request(self.start_url + '/search?q=' + keyword, meta={'keyword': keyword})
 
     def parse(self, response):
         j = json.loads(response.body_as_unicode())
-        print(f"total hits: {j['collection']['metadata']['total_hits']}")
+        # print(f"total hits: {j['collection']['metadata']['total_hits']}")
+
         for item in j['collection']['items']:
             for data in item['data']:
                 ni = NasaItem()
@@ -40,15 +42,21 @@ class NasaSpider(scrapy.Spider):
                     yield ni
                 except KeyError:
                     print(data)
+
+        # handle total hits
+        
+        total_hits = j['collection']['metadata']['total_hits']
+
+        page = response.meta.get('page', 1)
+        keyword = response.meta['keyword']
+
+        if page + 1 <= total_hits / 100:
+            link = f"{self.start_url}/search?q={keyword}&page={page+1}"
+            yield scrapy.Request(link, self.parse, meta={'keyword': keyword, 'page': page + 1})
         # next page
-        for link in j['collection']['links']:
-            if link['prompt'] == 'Next':
-                yield scrapy.Request(link['href'], self.parse)
+        # for link in j['collection']['links']:
+        #     if link['prompt'] == 'Next':
+        #         print('next page')
+        #         yield scrapy.Request(link['href'], self.parse)
 
         # raise CloseSpider(f'{t["id"]} > 100')
-
-    
-    def parse_todo(self, response):
-        todo = response.meta['todo']
-        j = json.loads(response.body_as_unicode())
-        print(j)

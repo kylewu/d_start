@@ -7,6 +7,6 @@ settings = get_project_settings()
 process = CrawlerProcess(settings)
 
 for keyword in settings['KEYWORDS']:
-        process.crawl('nasa', keyword=keyword)
+    process.crawl('nasa', keyword=keyword)
 
 process.start()

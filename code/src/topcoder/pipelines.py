@@ -17,3 +17,17 @@ class TopcoderPipeline(object):
              headers={'Content-Type': 'application/json'},
              )
         return item
+
+
+class DuplicatesPipeline(object):
+
+    def __init__(self):
+        settings = get_project_settings()
+        self.target_url = settings.get('SITEMAP_API_URL')
+
+    def process_item(self, item, spider):
+        res = requests.get(f"{self.target_url/leafs/item['nasaId']}")
+        if res.json() is None:
+            raise DropItem(f"Duplicate item found: {item['nasaId']}")
+        else:
+            return item
