@@ -90,3 +90,6 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 LOG_ENABLED = False
+
+
+KEYWORDS = ['Moon', ]
