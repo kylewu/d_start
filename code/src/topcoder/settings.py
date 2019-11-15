@@ -95,6 +95,7 @@ LOG_ENABLED = bool(os.getenv('LOG_ENABLED', False))
 
 import string
 KEYWORDS = [c for c in string.ascii_lowercase]
+# KEYWORDS = ['a',]
 
 
 NASA_ASSET_BASE_URL = 'https://images.nasa.gov/details-'

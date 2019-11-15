@@ -1,4 +1,4 @@
-
+import math
 import json
 import scrapy
 from scrapy.exceptions import CloseSpider
@@ -7,12 +7,16 @@ from scrapy.utils.project import get_project_settings
 
 from topcoder.items import NasaItem
 
-# TODO hardcode for now
-URL = 'https://images-api.nasa.gov'
+# DONE
+# duplication detect
+# start with keyword list
+# 
+
+# TODO 
+# dynamically extend keyword list
+# POST /mulitple-leafs
 
 class NasaSpider(scrapy.Spider):
-    """
-    """
     name = "nasa"
 
     def start_requests(self):
@@ -50,13 +54,7 @@ class NasaSpider(scrapy.Spider):
         page = response.meta.get('page', 1)
         keyword = response.meta['keyword']
 
-        if page + 1 <= total_hits / 100:
+        if page + 1 <= math.ceil(1.0 * total_hits / 100):
             link = f"{self.start_url}/search?q={keyword}&page={page+1}"
+            # print(link)
             yield scrapy.Request(link, self.parse, meta={'keyword': keyword, 'page': page + 1})
-        # next page
-        # for link in j['collection']['links']:
-        #     if link['prompt'] == 'Next':
-        #         print('next page')
-        #         yield scrapy.Request(link['href'], self.parse)
-
-        # raise CloseSpider(f'{t["id"]} > 100')

@@ -26,8 +26,10 @@ class DuplicatesPipeline(object):
         self.target_url = settings.get('SITEMAP_API_URL')
 
     def process_item(self, item, spider):
-        res = requests.get(f"{self.target_url/leafs/item['nasaId']}")
+        link = f"{self.target_url}/leafs/{item['nasaId']}"
+        res = requests.get(link)
         if res.json() is None:
-            raise DropItem(f"Duplicate item found: {item['nasaId']}")
-        else:
+            # not found, good
             return item
+        else:
+            raise DropItem(f"Duplicate item found: {item['nasaId']}")
