@@ -4,6 +4,7 @@ import json
 import requests
 
 from scrapy.utils.project import get_project_settings
+from scrapy.exceptions import DropItem
 
 class TopcoderPipeline(object):
     def __init__(self):

@@ -29,6 +29,10 @@ class NasaSpider(scrapy.Spider):
         yield scrapy.Request(self.start_url + '/search?q=' + keyword, meta={'keyword': keyword})
 
     def parse(self, response):
+
+        if response.status / 100 > 2:
+            return
+
         j = json.loads(response.body_as_unicode())
         # print(f"total hits: {j['collection']['metadata']['total_hits']}")
 
