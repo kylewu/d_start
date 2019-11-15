@@ -90,10 +90,9 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 LOG_ENABLED = bool(os.getenv('LOG_ENABLED', False))
-# LOG_ENABLED = False
 
 
-KEYWORDS = ['Moon', ]
+KEYWORDS = ['a', ]
 
 
 NASA_ASSET_BASE_URL = 'https://images.nasa.gov/details-'
