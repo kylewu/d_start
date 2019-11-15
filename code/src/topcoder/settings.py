@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import os
 # Scrapy settings for tc project
 #
 # For simplicity, this file contains only settings considered important or
@@ -64,9 +64,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'topcoder.pipelines.TopcoderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'topcoder.pipelines.TopcoderPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -89,7 +89,13 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-LOG_ENABLED = False
+LOG_ENABLED = bool(os.getenv('LOG_ENABLED', False))
+# LOG_ENABLED = False
 
 
 KEYWORDS = ['Moon', ]
+
+
+NASA_ASSET_BASE_URL = 'https://images.nasa.gov/details-'
+SITEMAP_API_URL = os.getenv('SITEMAP_API_URL', 'http://api:8080')
+AVAIL_API_URL = os.getenv('AVAIL_API_URL', 'http://avail:8080')

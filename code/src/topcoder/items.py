@@ -8,7 +8,10 @@
 import scrapy
 
 
-class TopcoderItem(scrapy.Item):
+class NasaItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    nasaId = scrapy.Field()
+    loc = scrapy.Field()
+    created = scrapy.Field()
+    mediaType = scrapy.Field()
+    keywords = scrapy.Field()
